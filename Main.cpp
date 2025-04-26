@@ -6,7 +6,7 @@ using namespace std;
 
 /*gameplay variables*/
 int strength, resistance, stamina, speed, hp, game_part;
-string player_class;
+string player_class = " ";
 
 /*gameplay function*/
 void floor_change(){
@@ -43,6 +43,7 @@ string input;
 /*controls function*/
 void player_input(){
     do {
+        input_value = 0;
         input = "";
         cout << "input:) : " << endl;
         cin >> input;
@@ -126,7 +127,9 @@ void class_selection(){
     do{
         cin >> player_class;
         if (player_class == "konzolovy uzivatel"){
-            strength, resistance, speed = 8;
+            strength = 8;
+            resistance = 8;
+            speed = 8;
             stamina = 3;
             hp = 80;
             cout << "Pockej ty si konzolista? Tohle bude bolest." << endl;
@@ -148,7 +151,7 @@ void class_selection(){
             cout << "Ty si masochista?";
             proces = 0;
         } else {
-            cout << "Ses takhle labilni porad?" << endl;
+            voices(schizo_voice_wi, 5);
         }
     }while(proces == 1);
 
@@ -174,5 +177,6 @@ int main(){
         cout << "Po dnech nudy sme konecne umreli na hlad." << endl;
         return 0;
     }
+    class_selection();
     game_loop();
 }
