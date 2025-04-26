@@ -23,16 +23,13 @@ void vypravec_speak(string field, int phrase){
         cout << field[phrase] << endl;
     
 }
-
-
-
 /*voices variables*/
 string schizo_voice_wi[5] = {"Vim ze sem z nás dvou ten chytrejsi, ale myslel jsem ze do ctyr pocitat umis.",
-                             "Hele na nerozhodnyho si muzes hrat jinde.",
-                             "Mame jen ctyri mozne cesty, tak si jednu vyber a nevymyslej kraviny",
-                             "Hele tebe ta rána do hlavy fakt ovlivnila? Nebo si takovej pořád?",
-                             "Hodláš dělat i něco co dává smysl, nebo to mám vzdát a nechat tě tu slepýho běhat světem.",
-                            };
+    "Hele na nerozhodnyho si muzes hrat jinde.",
+    "Mame jen ctyri mozne cesty, tak si jednu vyber a nevymyslej kraviny",
+    "Hele tebe ta rána do hlavy fakt ovlivnila? Nebo si takovej pořád?",
+    "Hodláš dělat i něco co dává smysl, nebo to mám vzdát a nechat tě tu slepýho běhat světem.",
+   };
 /*voices function*/
 void voices(string phrase[], int size){
     int random = rand( ) % size;
