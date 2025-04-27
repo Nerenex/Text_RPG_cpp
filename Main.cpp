@@ -1,34 +1,74 @@
 #include <iostream>
+#include <cstdlib>
+/*Tato knihovna slouží k tomu abych mohl vymazat již nepotřebný text. Pomocí system("cls");*/
+#include <windows.h>
+/*Tato knihovna slouží k tomu abych mohl používat funkci Sleep a zpomalovat tak chod hry*/
 #include <string>
 #include <ctime>
 #include <limits>
+
 using namespace std;
 
 /*gameplay variables*/
-int strength, resistance, stamina, speed, hp, game_part;
-string player_class = " ";
-
+int strength, resistance, stamina, speed, hp, game_part, floor, attack;
+string player_class;
+string enemy;
+/*gameplay field*/
+int enemy_stats[5] = {3, 0, 0, 0, 0};
+string player_ability[5] = {"cenichovka", };
 /*gameplay function*/
 void floor_change(){
     game_part++;
-    cout << "----------Vitej na " << game_part << ". patre----------";
+    floor++;
+    cout << "----------Vitej na " << floor << ". patre----------";
 }
-void game_loop(){
+    /*fight mechanics*/
+void player_attack(int attack){
+    cout << "pouzivas schopnost " << player_ability[attack-1] << endl;
+}
+    /*Tato funkce slouzis k provedeni schopnosti hrace*/
+void fight_loop(){
     do{
-        cout << 1 << endl;
+        Sleep(1500);
+        system("cls");
+        /*FTUI*/
+        cout << "--------probiha souboj--------" << endl
+        << "class: " << player_class << endl
+        << "sila: " << strength << " odolnost: " << resistance << " stamina: " << stamina << " rychlost: " << speed << endl
+        << "HP " << hp << endl
+        << "schopnosti: " << endl;
+        for (int i = 0; i < 5; i++){
+            if(player_ability[i] == ""){
+                cout << i+1 << ". .........." << endl;
+            }else{
+            cout << i+1 << ". " << player_ability[i] << endl;
+            }
+        }
+        /*FTEI*/
+        cout << "bojujes proti: " << enemy << endl
+        << "sila: " << enemy_stats[0] << " odolnost: " << enemy_stats[1] << " stamina: " << enemy_stats[2] << " rychlost: " << enemy_stats[3] << endl
+        << "HP " << enemy_stats[4] << endl;
+        /*Mechanika ktera rozhoduje kdo je rychlejsi*/
+        if(speed >= enemy_stats[2]){
+            cout << "jakou schopnost chces pouzit: ";
+            cin >> attack;
+            player_attack(attack);
+        }else{
+            cout << enemy << "je rychlejsi a utoci prvni" << endl; 
+        }
     }while(hp != 0);
 }
 /*code function */
 void vypravec_speak(string field, int phrase){
         cout << field[phrase] << endl;
-    
 }
 /*voices variables*/
-string schizo_voice_wi[5] = {"Vim ze sem z nás dvou ten chytrejsi, ale myslel jsem ze do ctyr pocitat umis.",
+string schizo_voice_wi[5] = {
     "Hele na nerozhodnyho si muzes hrat jinde.",
-    "Mame jen ctyri mozne cesty, tak si jednu vyber a nevymyslej kraviny",
     "Hele tebe ta rána do hlavy fakt ovlivnila? Nebo si takovej pořád?",
     "Hodláš dělat i něco co dává smysl, nebo to mám vzdát a nechat tě tu slepýho běhat světem.",
+     "Mame jen ctyri mozne cesty, tak si jednu vyber a nevymyslej kraviny",
+     "Vim ze sem z nás dvou ten chytrejsi, ale myslel jsem ze do ctyr pocitat umis."
    };
 /*voices function*/
 void voices(string phrase[], int size){
@@ -98,72 +138,71 @@ void class_selection(){
 
     cout << "classy:" << endl
 
-    << "konzolovy uzivatel: vetsinu her hrajes na konzily a proto by si nemusel zvladnout obtiznoust ostatnich class." << endl
+    << "konzolovy_uzivatel: vetsinu her hrajes na konzily a proto by si nemusel zvladnout obtiznoust ostatnich class." << endl
     << "specifika teto classy:" << endl
     << "sila = 8" << endl
     << "odolnost = 8" << endl
     << "stamina = 3" << endl
     << "rychlost = 8" << endl
     << "hp = 80" << endl
-
-    << "skleneny kanon: tvoje sila je obrovská, ale tvoje telo prekvapive krehke." << endl
+    << endl
+    << "skleneny_kanon: tvoje sila je obrovská, ale tvoje telo prekvapive krehke." << endl
     << "specifika teto classy:" << endl
     << "sila = 12" << endl
     << "odolnost = 2" << endl
     << "stamina = 1" << endl
     << "rychlost = 10" << endl
     << "hp = 25" << endl
-
-    << "proc ma vsecho tolik hp: i pitomého komára budes mlatit hodne dlouho" << endl
+    << endl
+    << "proc_ma_vsechno_tolik_hp: i pitomého komára budes mlatit hodne dlouho" << endl
     << "specifika teto classy:" << endl
     << "sila = 3" << endl
     << "odolnost = 8" << endl
     << "stamina = 2" << endl
     << "rychlost = 5" << endl
-    << "hp = 50" << endl;
-
+    << "hp = 50" << endl
+    << endl;
     proces = 1;
-
     do{
         cin >> player_class;
-        if (player_class == "konzolovy uzivatel"){
+        if (player_class == "konzolovy_uzivatel"){
             strength = 8;
             resistance = 8;
             speed = 8;
             stamina = 3;
             hp = 80;
-            cout << "Pockej ty si konzolista? Tohle bude bolest." << endl;
+            cout << "Pockej ty si konzolista? Tohle bude bolest." << endl
+            << "Zvolili jste classu: konzolovy_uzivatele" << endl;
             proces = 0;
-        } else if (player_class == "skleneny kanon"){
+        } else if (player_class == "skleneny_kanon"){
             strength = 12;
             resistance = 2;
             stamina = 1;
             speed = 10;
             hp = 25;
-            cout << "Tady nekdo cetl One punch mana, ze jo?";
+            cout << "Tady nekdo cetl One punch mana, ze jo?" << endl
+            << "Zvolili jste classu: skleneny_kanon" << endl;
             proces = 0;
-        } else if (player_class == "proc ma vsechno tolik hp"){
+        } else if (player_class == "proc_ma_vsechno_tolik_hp"){
             strength = 3;
             resistance = 8;
             stamina = 2;
             speed = 5;
             hp = 50;
-            cout << "Ty si masochista?";
+            cout << "Ty si masochista?" << endl
+            << "Zvolili jste classu: proc_ma_vsechno_tolik_hp" << endl;
             proces = 0;
         } else {
-            voices(schizo_voice_wi, 5);
+            voices(schizo_voice_wi, 3);
         }
     }while(proces == 1);
-
 }
 
 
-
-/*actual code*/
+/*actual hra*/
 int main(){
     srand(time(0));
-    name();
-    /*class_selection();*/
+    /*
     cout << "Tak asi aby sme se dali nejak do pohybu. Vidim drevene dvere lehce, to je doslova vse jinak je vsude kolem jen bílo. Co jdeme delat?" << endl
          << "a: vejdeme do dveri" << endl
          << "b: vejdeme do dveri cool zpusobem" << endl
@@ -173,10 +212,9 @@ int main(){
     if (input != "d"){
         cout << "Sem rad ze si rozumime." << "Vchazime do dveri, dobrodruzstvi zacina." << endl;
         floor_change();
-    }else{
-        cout << "Po dnech nudy sme konecne umreli na hlad." << endl;
-        return 0;
-    }
-    class_selection();
-    game_loop();
+    */
+   cout << "Vchazime do jeskyne kde na nas utoci kostlivec."  << endl;
+   hp = 1;
+   enemy = "kostlivec";
+    fight_loop();
 }
