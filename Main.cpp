@@ -52,7 +52,14 @@ void fight_loop(){
         if(speed >= enemy_stats[2]){
             cout << "jakou schopnost chces pouzit: ";
             cin >> attack;
+            cout << endl;
+            if(cin.fail()) {
+                cout << "takovou schopnost neumime, promarnil si nasi sanci" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }else{
             player_attack(attack);
+            }
         }else{
             cout << enemy << "je rychlejsi a utoci prvni" << endl; 
         }
