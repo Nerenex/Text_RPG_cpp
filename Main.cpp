@@ -55,13 +55,19 @@ void fight_loop(){
             cout << endl;
             if(cin.fail()) {
                 cout << "takovou schopnost neumime, promarnil si nasi sanci" << endl;
+                /*tohle maže ten neviditelný symbol v cin*/
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }else if(attack < 4){
+                cout << "takovou schopnost neumime, promarnil si nasi sanci" << endl;
+                /*tohle maže ten neviditelný symbol v cin*/
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }else{
             player_attack(attack);
             }
         }else{
-            cout << enemy << "je rychlejsi a utoci prvni" << endl; 
+            cout << enemy << "je rychlejsi a utoci prvni" << endl;
         }
     }while(hp != 0);
 }
@@ -72,10 +78,10 @@ void vypravec_speak(string field, int phrase){
 /*voices variables*/
 string schizo_voice_wi[5] = {
     "Hele na nerozhodnyho si muzes hrat jinde.",
-    "Hele tebe ta rána do hlavy fakt ovlivnila? Nebo si takovej pořád?",
-    "Hodláš dělat i něco co dává smysl, nebo to mám vzdát a nechat tě tu slepýho běhat světem.",
+    "Hele tebe ta rana do hlavy fakt ovlivnila? Nebo si takovej porad?",
+    "Hodlas delat i neco co dava smysl, nebo to mam vzdat a nechat te tu slepyho behat svetem.",
      "Mame jen ctyri mozne cesty, tak si jednu vyber a nevymyslej kraviny",
-     "Vim ze sem z nás dvou ten chytrejsi, ale myslel jsem ze do ctyr pocitat umis."
+     "Vim ze sem z nas dvou ten chytrejsi, ale myslel jsem ze do ctyr pocitat umis."
    };
 /*voices function*/
 void voices(string phrase[], int size){
@@ -120,7 +126,7 @@ string player_name;
 string a1 = "";
 /*story function*/
 void name(){
-    char Y_N; 
+    char Y_N;
     cout << "Vypadato ze mame amnesii a ocividne i schyzofrenii. Jak ze se to jmenujeme, nevzpominas si? " << endl;
     do{
     cin >> player_name;
