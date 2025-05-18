@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 /*Tato knihovna slouží k tomu abych mohl vymazat již nepotřebný text. Pomocí system("cls");*/
+#include <string>
+/*Tato knihovna slouží k práci se stringem*/
 #include <windows.h>
 /*Tato knihovna slouží k tomu abych mohl používat funkci Sleep a zpomalovat tak chod hry*/
 #include <string>
@@ -27,6 +29,30 @@ void player_attack(int attack){
     cout << "pouzivas schopnost " << player_ability[attack-1] << endl;
 }
     /*Tato funkce slouzis k provedeni schopnosti hrace*/
+void player_turn(){
+    cout << "jakou schopnost chces pouzit: ";
+    cin >> attack;
+    cout << endl;
+    if(cin.fail()) {
+        cout << "takovou schopnost neumime, promarnil si nasi sanci" << endl;
+        /*tohle maže ten neviditelný symbol v cin*/
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }else{
+        if(attack > 0 && attack < 6){
+            if(player_ability[attack-1].empty()){
+                cout << "slot " << attack << " je prazdny, promarnil si nasi sanci" << endl;
+            }else{
+                player_attack(attack);
+            }
+        }else{
+            cout << "takovou schopnost neumime, promarnil si nasi sanci" << endl;
+            /*tohle maže ten neviditelný symbol v cin*/
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}
 void fight_loop(){
     do{
         Sleep(1500);
@@ -50,22 +76,7 @@ void fight_loop(){
         << "HP " << enemy_stats[4] << endl;
         /*Mechanika ktera rozhoduje kdo je rychlejsi*/
         if(speed >= enemy_stats[2]){
-            cout << "jakou schopnost chces pouzit: ";
-            cin >> attack;
-            cout << endl;
-            if(cin.fail()) {
-                cout << "takovou schopnost neumime, promarnil si nasi sanci" << endl;
-                /*tohle maže ten neviditelný symbol v cin*/
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }else if(attack < 4){
-                cout << "takovou schopnost neumime, promarnil si nasi sanci" << endl;
-                /*tohle maže ten neviditelný symbol v cin*/
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }else{
-            player_attack(attack);
-            }
+            player_turn();
         }else{
             cout << enemy << "je rychlejsi a utoci prvni" << endl;
         }
