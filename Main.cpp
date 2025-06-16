@@ -86,8 +86,8 @@ vector<string> enemy_names = {
 // --- Pomocné funkce ---
 void clear() { system("cls"); }
 void clear_and_wait(int ms) {
-    clear();
     Sleep(ms);
+    clear();
     }
 // Tato funkce slouží k lepší čitelnosti a srozumitelnosti hry
 
